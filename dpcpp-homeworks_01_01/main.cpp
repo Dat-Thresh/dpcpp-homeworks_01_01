@@ -20,7 +20,7 @@ public:
 		sql_request = "SELECT ";
 	}
 
-	SqlSelectQueryBuilder& AddColumn(const std::string& column){
+	SqlSelectQueryBuilder& AddColumn(const std::string& column) noexcept {
 		if (!AddColumnCalled) {
 			q.column = column;
 			AddColumnCalled = true;
@@ -31,12 +31,12 @@ public:
 		return *this;
 	}
 
-	SqlSelectQueryBuilder& AddFrom(std::string from) {
+	SqlSelectQueryBuilder& AddFrom(const std::string& from) noexcept {
 		q.from = from;
 		return *this;
 	}
 
-	SqlSelectQueryBuilder& AddWhere(std::string a, std::string b) {
+	SqlSelectQueryBuilder& AddWhere(const std::string& a, const std::string& b) noexcept {
 		if (q.where.empty()) {
 			q.where = a + "=" + b;
 		}
@@ -46,7 +46,7 @@ public:
 		return *this;
 	}
 
-	std::string BuildQuery() {
+	std::string BuildQuery() noexcept {
 		if (AddColumnCalled == false) { q.column = "*"; }
 		sql_request += q.column + " FROM " + q.from + " WHERE " + q.where + ";";
 		//std::cout <<"We have: " <<  sql_request << std::endl;
